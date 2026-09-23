@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLORES DE MEDIANOCHE | Cortometraje Oficial</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        filmDark: '#08080a',
+                        filmCard: '#121217',
+                        filmBorder: '#22222e',
+                        filmRed: '#e50914',
+                        filmRedHover: '#f6121d',
+                        filmGold: '#d4af37',
+                        filmGoldLight: '#f3e5ab'
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #08080a; }
+        ::-webkit-scrollbar-thumb { background: #22222e; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e50914; }
+
+        .red-glow { box-shadow: 0 0 25px rgba(229, 9, 20, 0.35); }
+        .gold-glow { box-shadow: 0 0 20px rgba(212, 175, 55, 0.25); }
+        .glass-nav {
+            background: rgba(8, 8, 10, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .film-still-card { overflow: hidden; }
+        .film-still-card img { transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+        .film-still-card:hover img { transform: scale(1.08); }
+    </style>
+</head>
+<body class="bg-filmDark text-gray-200 font-sans antialiased selection:bg-filmRed selection:text-white leading-relaxed">
+
+    <!-- Navigation Bar -->
+    <header id="main-nav" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 glass-nav border-b border-filmBorder/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Brand / Film Title -->
+                <a href="#hero" class="flex items-center gap-3 group">
+                    <span class="w-3 h-3 bg-filmRed rounded-full inline-block group-hover:scale-125 transition-transform duration-300 shadow-[0_0_10px_#e50914]"></span>
+                    <span class="font-cinzel text-xl sm:text-2xl font-bold tracking-widest text-white uppercase group-hover:text-filmRed transition-colors">
+                        FLORES DE MEDIANOCHE
+                    </span>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden lg:flex items-center space-x-8 text-xs font-semibold uppercase tracking-widest text-gray-300">
+                    <a href="#synopsis" class="hover:text-filmRed transition-colors py-1">Sinopsis</a>
+                    <a href="#trailer" class="hover:text-filmRed transition-colors py-1">Teaser</a>
+                    <a href="#cast-crew" class="hover:text-filmRed transition-colors py-1">Reparto y Crew</a>
+                    <a href="#festivals" class="hover:text-filmRed transition-colors py-1">Festivales</a>
+                    <a href="#sponsors" class="hover:text-filmRed transition-colors py-1">Patrocinadores</a>
+                    <a href="#gallery" class="hover:text-filmRed transition-colors py-1">Galería</a>
+                    <a href="#contact" class="hover:text-filmRed transition-colors py-1">Contacto</a>
+                </nav>
+
+                <!-- Action Button: Press Kit Modal Trigger -->
+                <div class="hidden sm:flex items-center gap-4">
+                    <button onclick="openPressKitModal()" class="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider text-white bg-filmDark border border-filmGold/50 hover:border-filmGold hover:bg-filmGold/10 transition-all duration-300 shadow-md group">
+                        <i class="fa-solid fa-file-arrow-down text-filmGold group-hover:translate-y-0.5 transition-transform"></i>
+                        <span>Carpeta de Dirección</span>
+                        <span class="flex h-2 w-2 relative">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-filmGold opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-filmGold"></span>
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-md text-gray-400 hover:text-white hover:bg-filmCard focus:outline-none" aria-label="Toggle menu">
+                    <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-filmCard/95 border-b border-filmBorder px-4 pt-2 pb-6 space-y-3 font-semibold uppercase text-xs tracking-wider">
+            <a href="#synopsis" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-filmRed">Sinopsis</a>
+            <a href="#trailer" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-filmRed">Trailer</a>
+            <a href="#cast-crew" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-filmRed">Reparto y Crew</a>
+            <a href="#festivals" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-filmRed">Festivales</a>
+            <a href="#sponsors" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-filmRed">Patrocinadores</a>
+            <a href="#gallery" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-filmRed">Galería</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-filmRed">Contacto</a>
+            <div class="pt-2 border-t border-filmBorder">
+                <button onclick="toggleMobileMenu(); openPressKitModal();" class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-xs font-bold uppercase text-white bg-filmRed hover:bg-filmRedHover">
+                    <i class="fa-solid fa-file-arrow-down"></i> Descargar Carpeta
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-black">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2000&auto=format&fit=crop" 
+                 alt="Flores de Medianoche Backdrop" 
+                 class="w-full h-full object-cover opacity-35 scale-105 transform animate-pulse duration-1000">
+            <div class="absolute inset-0 bg-gradient-to-t from-filmDark via-filmDark/70 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-filmDark via-transparent to-filmDark/80"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center pt-12 pb-16 flex flex-col items-center">
+            
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-filmRed/20 border border-filmRed/40 text-filmRed text-xs font-bold uppercase tracking-widest mb-6">
+                <i class="fa-solid fa-film text-[10px]"></i> Cortometraje Oficial • México 2026
+            </div>
+
+            <h1 class="font-cinzel text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-wider mb-4 drop-shadow-2xl">
+                FLORES DE MEDIANOCHE
+            </h1>
+            <p class="font-cinzel text-sm sm:text-base text-filmGold tracking-[0.3em] uppercase mb-8 font-semibold">
+                "¿Y si me cantas una canción de amor?"
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-gray-300 font-medium mb-10 border-y border-filmBorder/80 py-3 px-6 bg-filmDark/40 backdrop-blur-sm rounded-full">
+                <span class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-filmRed"></i> 8 MIN</span>
+                <span class="text-gray-600">•</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-masks-theater text-filmRed"></i> MELODRAMA ROMÁNTICO</span>
+                <span class="text-gray-600">•</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-calendar text-filmRed"></i> 2026</span>
+                <span class="text-gray-600">•</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-globe text-filmRed"></i> ESPAÑOL</span>
+                <span class="text-gray-600">•</span>
+                <span class="flex items-center gap-1.5 text-filmGold font-bold"><i class="fa-solid fa-certificate"></i> 4K / ESTÉREO</span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                <button onclick="openTrailerModal()" class="w-full sm:w-auto px-8 py-4 rounded-full bg-filmRed hover:bg-filmRedHover text-white font-bold text-sm uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-3 red-glow transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-play text-lg"></i> Ver Teaser / Trailer
+                </button>
+                <a href="#synopsis" class="w-full sm:w-auto px-8 py-4 rounded-full bg-filmCard/80 hover:bg-filmCard text-white border border-filmBorder hover:border-gray-500 font-bold text-sm uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-align-left text-gray-400"></i> Leer Sinopsis
+                </a>
+            </div>
+
+            <div class="mt-16 sm:mt-24 animate-bounce">
+                <a href="#festivals" class="text-gray-500 hover:text-filmGold transition-colors text-xs uppercase tracking-widest flex flex-col items-center gap-2">
+                    <span>Selecciones Oficiales</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Festivals & Laurels Banner -->
+    <section id="festivals" class="py-16 bg-filmCard border-y border-filmBorder relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-xs font-bold tracking-[0.25em] text-filmGold uppercase mb-10">
+                Selección de Festivales y Recorrido
+            </p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-8 items-center justify-center text-center">
+                
+                <div class="flex flex-col items-center justify-center p-3 group hover:scale-105 transition-transform duration-300">
+                    <div class="relative w-28 h-28 flex items-center justify-center text-filmGold">
+                        <i class="fa-solid fa-award text-5xl opacity-80 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                    <span class="font-cinzel text-xs font-bold text-white uppercase tracking-wider mt-1">FICG Internacional</span>
+                    <span class="text-[10px] text-gray-400 uppercase tracking-widest">Selección Oficial 2026</span>
+                </div>
+
+                <div class="flex flex-col items-center justify-center p-3 group hover:scale-105 transition-transform duration-300">
+                    <div class="relative w-28 h-28 flex items-center justify-center text-filmGold">
+                        <i class="fa-solid fa-crown text-5xl opacity-80 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                    <span class="font-cinzel text-xs font-bold text-white uppercase tracking-wider mt-1">Morelia Film Fest</span>
+                    <span class="text-[10px] text-gray-400 uppercase tracking-widest">Cortometraje Mexicano</span>
+                </div>
+
+                <div class="flex flex-col items-center justify-center p-3 group hover:scale-105 transition-transform duration-300">
+                    <div class="relative w-28 h-28 flex items-center justify-center text-filmGold">
+                        <i class="fa-solid fa-star text-5xl opacity-80 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                    <span class="font-cinzel text-xs font-bold text-white uppercase tracking-wider mt-1">Guanajuato Film Fest</span>
+                    <span class="text-[10px] text-gray-400 uppercase tracking-widest">Ficción Nacional</span>
+                </div>
+
+                <div class="flex flex-col items-center justify-center p-3 group hover:scale-105 transition-transform duration-300">
+                    <div class="relative w-28 h-28 flex items-center justify-center text-filmGold">
+                        <i class="fa-solid fa-trophy text-5xl opacity-80 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                    <span class="font-cinzel text-xs font-bold text-white uppercase tracking-wider mt-1">Pantalla de Cristal</span>
+                    <span class="text-[10px] text-gray-400 uppercase tracking-widest">Mejor Dirección de Arte</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Synopsis & Director's Statement -->
+    <section id="synopsis" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            
+            <div class="lg:col-span-7 space-y-8">
+                <div>
+                    <span class="text-filmRed text-xs font-bold uppercase tracking-widest">Acerca del Cortometraje</span>
+                    <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-white mt-1 uppercase tracking-wide">
+                        Sinopsis
+                    </h2>
+                    <div class="w-12 h-1 bg-filmRed mt-3"></div>
+                </div>
+
+                <!-- Logline Box -->
+                <div class="p-6 bg-filmCard rounded-xl border border-filmBorder relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-filmGold"></div>
+                    <h3 class="text-xs uppercase font-bold tracking-widest text-filmGold mb-2">Sinopsis Breve</h3>
+                    <p class="text-lg font-medium text-gray-100 italic leading-relaxed">
+                        "Rocío, una joven bailarina de danza folclórica, vive enamorada en secreto de María, su pareja de baile. Cuando al fin reúne la fuerza para abrir su corazón, el miedo al rechazo la paraliza y la hace encerrarse en sus propias dudas."
+                    </p>
+                </div>
+
+                <!-- Full Plot -->
+                <div class="space-y-4 text-gray-300 text-sm sm:text-base leading-relaxed">
+                    <h3 class="text-xs uppercase font-bold tracking-widest text-filmGold mb-1">Sinopsis Detallada</h3>
+                    <p>
+                        Rocío es una joven bailarina de danza folclórica, tímida y soñadora, criada bajo el abrigo de sus abuelos y la nostalgia del cine de oro mexicano. Desde hace tiempo guarda en secreto un amor profundo por María, su pareja de baile. Aunque entre las dos existe una complicidad que roza lo romántico, ninguna de las dos se ha atrevido a confesar sus sentimientos. Rocío está decidida: no quiere pasar un día más en silencio, por lo que reúne el valor para componerle una canción con la que al fin abrirá su corazón.
+                    </p>
+                    <p>
+                        Sin embargo, el día de la presentación, la prisa y la tensión se apoderan del ambiente. Al volver a casa por sus flores y arreglarse antes de salir, su abuelo al enterarse de las intenciones de Rocío y convencido de que María sigue enamorada de Julián, se niega a llevarla al teatro para evitar que le rompan el corazón. Con el tiempo encima y la duda sembrada, es su abuela quien interviene con dulzura, entregándole la guitarra del abuelo y dándole el impulso necesario para salir a luchar por su amor.
+                    </p>
+                    <p>
+                        En el trayecto al teatro, Rocío debe librar una carrera contra el tiempo y enfrentar una serie de obstáculos que la confrontan directamente con sus miedos y la sombra de sus inseguridades. Mientras tanto, en el escenario, la ausencia de Rocío hiere profundamente a María...
+                    </p>
+                </div>
+
+                <!-- Technical Specs Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 text-xs">
+                    <div class="p-4 bg-filmCard/50 border border-filmBorder/60 rounded-lg">
+                        <span class="block text-gray-500 uppercase font-semibold">Formato de Captura</span>
+                        <span class="text-white font-bold text-sm">Digital, 4K</span>
+                    </div>
+                    <div class="p-4 bg-filmCard/50 border border-filmBorder/60 rounded-lg">
+                        <span class="block text-gray-500 uppercase font-semibold">Formato de Sonido</span>
+                        <span class="text-white font-bold text-sm">Estéreo - Sonido directo</span>
+                    </div>
+                    <div class="p-4 bg-filmCard/50 border border-filmBorder/60 rounded-lg col-span-2 sm:col-span-1">
+                        <span class="block text-gray-500 uppercase font-semibold">Color</span>
+                        <span class="text-white font-bold text-sm">Color y B&N</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Director Statement Card -->
+            <div class="lg:col-span-5">
+                <div class="bg-filmCard rounded-2xl border border-filmBorder p-8 relative shadow-xl">
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop" 
+                             alt="Fernanda Tovar Directora" 
+                             class="w-16 h-16 rounded-full object-cover border-2 border-filmGold">
+                        <div>
+                            <h3 class="font-cinzel text-lg font-bold text-white uppercase">Fernanda Tovar</h3>
+                            <p class="text-xs text-filmRed uppercase font-semibold tracking-wider">Dirección</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 text-gray-300 text-xs sm:text-sm italic leading-relaxed relative">
+                        <i class="fa-solid fa-quote-left text-3xl text-filmBorder absolute -top-3 -left-2 -z-0 opacity-40"></i>
+                        <p class="relative z-10">
+                            "Flores de Medianoche nace de la necesidad de explorar el amor sutil, el peso de la tradición y los silencios que guardamos en el seno de la familia y el arte popular mexicano."
+                        </p>
+                        <p class="relative z-10">
+                            "A través de la danza folclórica y la estética del cine de oro, buscamos retratar la valentía que se requiere para dar un paso al frente y cantar nuestra propia verdad."
+                        </p>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-filmBorder/60 flex items-center justify-between">
+                        <span class="text-[10px] text-gray-500 uppercase tracking-widest">Carpeta de Dirección</span>
+                        <span class="text-xs text-filmGold font-serif font-semibold">F. Tovar</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Embedded Video / Trailer Section -->
+    <section id="trailer" class="py-20 bg-filmCard border-y border-filmBorder relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-filmRed text-xs font-bold uppercase tracking-widest">Avance Oficial</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-white uppercase tracking-wider mt-1">
+                    Ver Teaser
+                </h2>
+                <p class="text-gray-400 text-sm mt-2">Disfruta un vistazo a "Flores de Medianoche"</p>
+            </div>
+
+            <div class="relative aspect-video rounded-2xl overflow-hidden bg-black border border-filmBorder shadow-2xl group">
+                <video id="inline-film-video" class="w-full h-full object-cover" poster="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1600&auto=format&fit=crop">
+                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" type="video/mp4">
+                    Tu navegador no soporta reproducción de video.
+                </video>
+
+                <div id="video-overlay" class="absolute inset-0 bg-black/50 backdrop-blur-[2px] flex flex-col items-center justify-center transition-opacity duration-300 cursor-pointer" onclick="toggleInlineVideo()">
+                    <div class="w-20 h-20 rounded-full bg-filmRed hover:bg-filmRedHover text-white flex items-center justify-center red-glow transform group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-play text-2xl ml-1"></i>
+                    </div>
+                    <span class="mt-4 text-xs font-bold uppercase tracking-widest text-white">Reproducir Avance (8 min)</span>
+                </div>
+
+                <div id="video-controls" class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/90 to-transparent flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div class="flex items-center gap-4">
+                        <button onclick="toggleInlineVideo()" class="text-white hover:text-filmRed transition-colors">
+                            <i id="inline-play-icon" class="fa-solid fa-play text-lg"></i>
+                        </button>
+                        <button onclick="toggleInlineMute()" class="text-white hover:text-filmRed transition-colors">
+                            <i id="inline-mute-icon" class="fa-solid fa-volume-high text-lg"></i>
+                        </button>
+                        <span class="text-xs text-gray-300 font-mono">4K Ultra HD</span>
+                    </div>
+
+                    <button onclick="openTrailerModal()" class="text-xs uppercase tracking-widest font-bold text-filmGold hover:text-white transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-expand"></i> Modo Teatro
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Cast & Crew Section -->
+    <section id="cast-crew" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-filmBorder pb-6">
+            <div>
+                <span class="text-filmRed text-xs font-bold uppercase tracking-widest">El Talento y Equipo</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-white uppercase tracking-wider mt-1">
+                    Reparto y Crew Técnico
+                </h2>
+            </div>
+            <p class="text-gray-400 text-xs sm:text-sm mt-2 md:mt-0 max-w-md">
+                Creadores y artistas detrás de este melodrama romántico mexicano.
+            </p>
+        </div>
+
+        <!-- Ficha Técnica / Crew Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div class="bg-filmCard border border-filmBorder rounded-xl p-6 group hover:border-filmRed/50 transition-all duration-300">
+                <span class="text-xs text-filmRed uppercase font-bold tracking-wider">Dirección</span>
+                <h3 class="font-cinzel text-lg font-bold text-white mt-1">Fernanda Tovar</h3>
+                <p class="text-xs text-gray-400 mt-2">Directora y creadora de la carpeta de dirección del cortometraje.</p>
+            </div>
+
+            <div class="bg-filmCard border border-filmBorder rounded-xl p-6 group hover:border-filmRed/50 transition-all duration-300">
+                <span class="text-xs text-filmGold uppercase font-bold tracking-wider">Producción</span>
+                <h3 class="font-cinzel text-lg font-bold text-white mt-1">Rafael Rodríguez</h3>
+                <p class="text-xs text-gray-400 mt-2>Encargado de la producción general del proyecto cinematográfico.</p>
+            </div>
+
+            <div class="bg-filmCard border border-filmBorder rounded-xl p-6 group hover:border-filmRed/50 transition-all duration-300">
+                <span class="text-xs text-filmGold uppercase font-bold tracking-wider">Fotografía</span>
+                <h3 class="font-cinzel text-lg font-bold text-white mt-1">Frida Joen</h3>
+                <p class="text-xs text-gray-400 mt-2">Dirección de fotografía y manejo de paleta de colores del mundo exterior y mental.</p>
+            </div>
+
+            <div class="bg-filmCard border border-filmBorder rounded-xl p-6 group hover:border-filmRed/50 transition-all duration-300">
+                <span class="text-xs text-filmGold uppercase font-bold tracking-wider">Diseño de Producción</span>
+                <h3 class="font-cinzel text-lg font-bold text-white mt-1">Maxiemiliano Favela</h3>
+                <p class="text-xs text-gray-400 mt-2">Ambientación de la casa de los abuelos, camerinos y vestuarios típicos.</p>
+            </div>
+
+        </div>
+
+        <!-- Full Crew Credits Accordion List -->
+        <div class="mt-12 bg-filmCard/60 border border-filmBorder rounded-xl p-6">
+            <h4 class="text-xs uppercase font-bold tracking-widest text-gray-400 mb-4 border-b border-filmBorder pb-2">Créditos Completos (Ficha Técnica)</h4>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+                <div>
+                    <span class="text-gray-500 block">Dirección</span>
+                    <span class="text-gray-200 font-medium">Fernanda Tovar</span>
+                </div>
+                <div>
+                    <span class="text-gray-500 block">Producción</span>
+                    <span class="text-gray-200 font-medium">Rafael Rodríguez</span>
+                </div>
+                <div>
+                    <span class="text-gray-500 block">Asistente de Dirección</span>
+                    <span class="text-gray-200 font-medium">Rodrigo Cerdán</span>
+                </div>
+                <div>
+                    <span class="text-gray-500 block">Fotografía</span>
+                    <span class="text-gray-200 font-medium">Frida Joen</span>
+                </div>
+                <div>
+                    <span class="text-gray-500 block">Sonido directo</span>
+                    <span class="text-gray-200 font-medium">Rafael Arenas</span>
+                </div>
+                <div>
+                    <span class="text-gray-500 block">Diseño de Producción</span>
+                    <span class="text-gray-200 font-medium">Maxiemiliano Favela</span>
+                </div>
+                <div>
+                    <span class="text-gray-500 block">Montaje</span>
+                    <span class="text-gray-200 font-medium">Fernanda Mendieta</span>
+                </div>
+                <div>
+                    <span class="text-gray-500 block">País / Año</span>
+                    <span class="text-gray-200 font-medium">México, 2026</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personajes Principales -->
+        <div class="mt-16">
+            <h3 class="font-cinzel text-2xl font-bold text-white uppercase tracking-wider mb-8">Personajes Principales</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-filmCard p-6 rounded-xl border border-filmBorder">
+                    <h4 class="font-cinzel text-lg font-bold text-filmGold">Rocío</h4>
+                    <p class="text-xs text-filmRed uppercase font-semibold mb-3">La Protagonista</p>
+                    <p class="text-xs text-gray-300 leading-relaxed">Joven bailarina de danza folclórica, tímida, soñadora y de alma vieja. Enamorada en secreto de María, su duda y miedo al rechazo la detienen hasta que el tiempo se agota.</p>
+                </div>
+                <div class="bg-filmCard p-6 rounded-xl border border-filmBorder">
+                    <h4 class="font-cinzel text-lg font-bold text-filmGold">María</h4>
+                    <p class="text-xs text-filmRed uppercase font-semibold mb-3">Pareja de Baile</p>
+                    <p class="text-xs text-gray-300 leading-relaxed">Joven impulsiva, extrovertida y resuelta. Su corazón pertenece a Rocío desde hace tiempo, pero la ausencia de su compañera en la función la hiere profundamente.</p>
+                </div>
+                <div class="bg-filmCard p-6 rounded-xl border border-filmBorder">
+                    <h4 class="font-cinzel text-lg font-bold text-filmGold">Abuela Chuyita & Abuelo Miguel</h4>
+                    <p class="text-xs text-filmRed uppercase font-semibold mb-3">Los Abuelos</p>
+                    <p class="text-xs text-gray-300 leading-relaxed">Chuyita es el refugio y apoyo incondicional de Rocío. Miguel, exmariachi protector, teme que su nieta sufra una desilusión amorosa.</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- NEW SECTION: Patrocinadores / Sponsors -->
+    <section id="sponsors" class="py-20 bg-filmCard/80 border-y border-filmBorder relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            
+            <span class="text-filmGold text-xs font-bold uppercase tracking-widest">Alianzas y Colaboradores</span>
+            <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-white uppercase tracking-wider mt-1 mb-4">
+                Patrocinadores y Aliados
+            </h2>
+            <p class="text-gray-400 text-sm max-w-xl mx-auto mb-12">
+                Agradecemos profundamente el valioso apoyo de las instituciones, marcas y estudios culturales que hacen posible la realización de este cortometraje.
+            </p>
+
+            <!-- Grid de Patrocinadores (Logos simulados / tarjetas estilizadas) -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 items-center justify-center">
+                
+                <div class="p-6 bg-filmDark border border-filmBorder rounded-xl flex flex-col items-center justify-center hover:border-filmGold/50 transition-colors group">
+                    <i class="fa-solid fa-clapperboard text-3xl text-filmGold mb-3 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-cinzel text-sm font-bold text-white tracking-wider">CineFolk México</span>
+                    <span class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Patrocinador Oficial</span>
+                </div>
+
+                <div class="p-6 bg-filmDark border border-filmBorder rounded-xl flex flex-col items-center justify-center hover:border-filmGold/50 transition-colors group">
+                    <i class="fa-solid fa-guitar text-3xl text-filmRed mb-3 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-cinzel text-sm font-bold text-white tracking-wider">Guitarras Bohemicas</span>
+                    <span class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Aliado Musical</span>
+                </div>
+
+                <div class="p-6 bg-filmDark border border-filmBorder rounded-xl flex flex-col items-center justify-center hover:border-filmGold/50 transition-colors group">
+                    <i class="fa-solid fa-masks-theater text-3xl text-filmGold mb-3 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-cinzel text-sm font-bold text-white tracking-wider">Teatro Tradición</span>
+                    <span class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Sede de Filmación</span>
+                </div>
+
+                <div class="p-6 bg-filmDark border border-filmBorder rounded-xl flex flex-col items-center justify-center hover:border-filmGold/50 transition-colors group">
+                    <i class="fa-solid fa-camera-retro text-3xl text-filmRed mb-3 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-cinzel text-sm font-bold text-white tracking-wider">Optica 4K Rentals</span>
+                    <span class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Equipo Técnico</span>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Gallery Section (Film Stills) -->
+    <section id="gallery" class="py-24 bg-filmDark border-y border-filmBorder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-filmRed text-xs font-bold uppercase tracking-widest">Archivo Visual</span>
+                    <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-white uppercase tracking-wider mt-1">
+                        Galería y Propuesta de Arte
+                    </h2>
+                </div>
+                <p class="text-gray-400 text-xs sm:text-sm mt-2 md:mt-0">
+                    Haz clic en cualquier imagen para verla en alta resolución.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="film-still-card relative rounded-xl bg-black border border-filmBorder cursor-pointer group" onclick="openLightbox(0)">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop" 
+                         alt="Casa de los Abuelos" 
+                         class="w-full aspect-video object-cover opacity-90 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white text-2xl"></i>
+                    </div>
+                    <div class="absolute bottom-3 left-3 right-3 text-[11px] text-gray-300 bg-filmDark/80 backdrop-blur-md px-3 py-1.5 rounded border border-filmBorder">
+                        Frame #01: "Casa de los Abuelos"
+                    </div>
+                </div>
+
+                <div class="film-still-card relative rounded-xl bg-black border border-filmBorder cursor-pointer group" onclick="openLightbox(1)">
+                    <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=800&auto=format&fit=crop" 
+                         alt="Danza Folclórica" 
+                         class="w-full aspect-video object-cover opacity-90 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white text-2xl"></i>
+                    </div>
+                    <div class="absolute bottom-3 left-3 right-3 text-[11px] text-gray-300 bg-filmDark/80 backdrop-blur-md px-3 py-1.5 rounded border border-filmBorder">
+                        Frame #02: "Ensayo General"
+                    </div>
+                </div>
+
+                <div class="film-still-card relative rounded-xl bg-black border border-filmBorder cursor-pointer group" onclick="openLightbox(2)">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop" 
+                         alt="Mente de Rocío" 
+                         class="w-full aspect-video object-cover opacity-90 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white text-2xl"></i>
+                    </div>
+                    <div class="absolute bottom-3 left-3 right-3 text-[11px] text-gray-300 bg-filmDark/80 backdrop-blur-md px-3 py-1.5 rounded border border-filmBorder">
+                        Frame #03: "Mente de Rocío"
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Press Kit & Contact Section -->
+    <section id="contact" class="py-24 bg-filmCard border-t border-filmBorder relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <span class="text-filmGold text-xs font-bold uppercase tracking-widest">Documentación</span>
+                        <h2 class="font-cinzel text-3xl font-bold text-white uppercase tracking-wider mt-1">
+                            Carpeta de Dirección
+                        </h2>
+                        <p class="text-xs text-gray-400 mt-2">
+                            Descarga la carpeta completa de dirección por Fernanda Tovar, incluyendo notas de arte, personajes y propuesta sonora.
+                        </p>
+                    </div>
+
+                    <div class="bg-filmDark/80 rounded-xl p-6 border border-filmBorder space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-filmBorder text-xs">
+                            <span class="text-gray-300 font-medium flex items-center gap-2">
+                                <i class="fa-solid fa-file-pdf text-filmRed"></i> Carpeta de Dirección (PDF)
+                            </span>
+                            <span class="text-gray-500">5.4 MB</span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-gray-300 font-medium flex items-center gap-2">
+                                <i class="fa-solid fa-file-image text-filmGold"></i> Stills y Moodboard (ZIP)
+                            </span>
+                            <span class="text-gray-500">42 MB</span>
+                        </div>
+
+                        <button onclick="openPressKitModal()" class="w-full mt-4 py-3 rounded-lg bg-filmGold hover:bg-filmGoldLight text-black font-bold text-xs uppercase tracking-widest transition-colors flex items-center justify-center gap-2 shadow-lg">
+                            <i class="fa-solid fa-download"></i> Descargar Carpeta Completa
+                        </button>
+                    </div>
+
+                    <div class="p-6 bg-filmDark/40 rounded-xl border border-filmBorder/50 space-y-3 text-xs">
+                        <h4 class="font-bold text-white uppercase tracking-wider mb-2">Contacto Directo</h4>
+                        <p class="text-gray-400 flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-filmRed"></i>
+                            <span>contacto@floresdemedianochefilm.com</span>
+                        </p>
+                        <p class="text-gray-400 flex items-center gap-2">
+                            <i class="fa-solid fa-clapperboard text-filmRed"></i>
+                            <span>Dirección: Fernanda Tovar</span>
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="lg:col-span-7 bg-filmDark p-8 rounded-2xl border border-filmBorder">
+                    <span class="text-filmRed text-xs font-bold uppercase tracking-widest">Escríbenos</span>
+                    <h3 class="font-cinzel text-2xl font-bold text-white uppercase tracking-wider mt-1 mb-6">
+                        Solicitud de Funciones y Prensa
+                    </h3>
+
+                    <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider font-semibold text-gray-400 mb-1">Tu Nombre *</label>
+                                <input type="text" required placeholder="Nombre completo" class="w-full bg-filmCard border border-filmBorder rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-filmRed transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider font-semibold text-gray-400 mb-1">Correo Electrónico *</label>
+                                <input type="email" required placeholder="correo@ejemplo.com" class="w-full bg-filmCard border border-filmBorder rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-filmRed transition-colors">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider font-semibold text-gray-400 mb-1">Mensaje *</label>
+                            <textarea rows="4" required placeholder="Escribe aquí tu solicitud sobre el cortometraje..." class="w-full bg-filmCard border border-filmBorder rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-filmRed transition-colors"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 rounded-lg bg-filmRed hover:bg-filmRedHover text-white font-bold text-xs uppercase tracking-widest transition-colors flex items-center justify-center gap-2 red-glow">
+                            <i class="fa-solid fa-paper-plane"></i> Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-filmBorder text-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <h2 class="font-cinzel text-xl font-bold tracking-widest text-white uppercase mb-2">
+                FLORES DE MEDIANOCHE
+            </h2>
+            <p class="text-xs text-gray-500 uppercase tracking-widest mb-6">
+                Un cortometraje de Fernanda Tovar • México 2026 • Todos los derechos reservados
+            </p>
+
+            <div class="flex items-center justify-center space-x-6 text-gray-400 text-lg mb-8">
+                <a href="#" class="hover:text-filmRed transition-colors" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-filmRed transition-colors" aria-label="Vimeo"><i class="fa-brands fa-vimeo-v"></i></a>
+                <a href="#" class="hover:text-filmRed transition-colors" aria-label="IMDb"><i class="fa-brands fa-imdb"></i></a>
+            </div>
+
+            <p class="text-[10px] text-gray-600 max-w-lg mx-auto">
+                Basado en la carpeta de dirección oficial "¿Y si me cantas una canción de amor?".
+            </p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="trailer-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden items-center justify-center p-4 sm:p-8">
+        <div class="relative w-full max-w-5xl bg-black rounded-2xl overflow-hidden border border-filmBorder shadow-2xl">
+            <div class="flex items-center justify-between px-6 py-4 bg-filmCard border-b border-filmBorder">
+                <span class="font-cinzel text-xs font-bold uppercase tracking-widest text-white">FLORES DE MEDIANOCHE — Teaser Oficial</span>
+                <button onclick="closeTrailerModal()" class="text-gray-400 hover:text-white transition-colors p-1">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <div class="relative aspect-video bg-black">
+                <video id="modal-film-video" controls class="w-full h-full object-cover">
+                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <div id="presskit-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="bg-filmCard border border-filmBorder rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative">
+            <button onclick="closePressKitModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 rounded-full bg-filmGold/10 border border-filmGold/30 text-filmGold flex items-center justify-center mx-auto mb-3">
+                    <i class="fa-solid fa-box-archive text-2xl"></i>
+                </div>
+                <h3 class="font-cinzel text-xl font-bold text-white uppercase tracking-wider">Carpeta de Dirección</h3>
+                <p class="text-xs text-gray-400 mt-1">Descargando archivos del cortometraje (PDF y Material Visual)</p>
+            </div>
+            <div id="download-progress-container" class="space-y-3 my-6">
+                <div class="flex justify-between text-xs text-gray-300 font-mono">
+                    <span id="download-status-text">Preparando descarga...</span>
+                    <span id="download-percentage">0%</span>
+                </div>
+                <div class="w-full h-2 bg-filmDark rounded-full overflow-hidden border border-filmBorder">
+                    <div id="download-bar" class="h-full bg-gradient-to-r from-filmRed to-filmGold w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+            <div class="space-y-2 text-xs">
+                <button id="start-download-btn" onclick="simulateDownload()" class="w-full py-3 rounded-lg bg-filmRed hover:bg-filmRedHover text-white font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-download"></i> Iniciar Descarga
+                </button>
+                <button onclick="closePressKitModal()" class="w-full py-2.5 rounded-lg border border-filmBorder text-gray-400 hover:text-white font-semibold uppercase tracking-widest text-[11px]">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex-col justify-between p-4 sm:p-8">
+        <div class="flex justify-between items-center text-white z-10">
+            <span id="lightbox-caption" class="font-cinzel text-xs uppercase tracking-widest text-filmGold">Frame #01</span>
+            <button onclick="closeLightbox()" class="text-gray-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+        </div>
+        <div class="relative flex-1 flex items-center justify-center my-4">
+            <button onclick="prevLightboxImage()" class="absolute left-2 sm:left-6 z-10 text-white bg-filmCard/80 hover:bg-filmRed p-3 rounded-full transition-colors">
+                <i class="fa-solid fa-chevron-left text-xl"></i>
+            </button>
+            <img id="lightbox-image" src="" alt="Still" class="max-h-[80vh] max-w-full object-contain rounded-lg border border-filmBorder shadow-2xl">
+            <button onclick="nextLightboxImage()" class="absolute right-2 sm:right-6 z-10 text-white bg-filmCard/80 hover:bg-filmRed p-3 rounded-full transition-colors">
+                <i class="fa-solid fa-chevron-right text-xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-filmCard border border-filmGold text-white px-5 py-3 rounded-xl shadow-2xl hidden items-center gap-3 transition-all duration-300 transform translate-y-4">
+        <i class="fa-solid fa-circle-check text-filmGold text-lg"></i>
+        <span id="toast-message" class="text-xs font-semibold">Acción completada con éxito.</span>
+    </div>
+
+    <script>
+        const galleryStills = [
+            { url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop", title: 'Frame #01: "Casa de los Abuelos"' },
+            { url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1600&auto=format&fit=crop", title: 'Frame #02: "Ensayo General"' },
+            { url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600&auto=format&fit=crop", title: 'Frame #03: "Mente de Rocío"' }
+        ];
+        let currentLightboxIndex = 0;
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        function toggleInlineVideo() {
+            const video = document.getElementById('inline-film-video');
+            const overlay = document.getElementById('video-overlay');
+            const playIcon = document.getElementById('inline-play-icon');
+            if (video.paused) {
+                video.play();
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                playIcon.classList.replace('fa-play', 'fa-pause');
+            } else {
+                video.pause();
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                playIcon.classList.replace('fa-pause', 'fa-play');
+            }
+        }
+
+        function toggleInlineMute() {
+            const video = document.getElementById('inline-film-video');
+            const muteIcon = document.getElementById('inline-mute-icon');
+            video.muted = !video.muted;
+            muteIcon.classList.toggle('fa-volume-high');
+            muteIcon.classList.toggle('fa-volume-xmark');
+        }
+
+        function openTrailerModal() {
+            const modal = document.getElementById('trailer-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.getElementById('modal-film-video').play();
+        }
+
+        function closeTrailerModal() {
+            const modal = document.getElementById('trailer-modal');
+            document.getElementById('modal-film-video').pause();
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function openPressKitModal() {
+            document.getElementById('presskit-modal').classList.remove('hidden');
+            document.getElementById('presskit-modal').classList.add('flex');
+        }
+
+        function closePressKitModal() {
+            document.getElementById('presskit-modal').classList.add('hidden');
+            document.getElementById('presskit-modal').classList.remove('flex');
+        }
+
+        function simulateDownload() {
+            const bar = document.getElementById('download-bar');
+            const text = document.getElementById('download-status-text');
+            const percent = document.getElementById('download-percentage');
+            const btn = document.getElementById('start-download-btn');
+            btn.disabled = true;
+            let progress = 0;
+            text.innerText = "Preparando carpeta en PDF...";
+
+            const interval = setInterval(() => {
+                progress += 20;
+                bar.style.width = progress + '%';
+                percent.innerText = progress + '%';
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    text.innerText = "¡Descarga lista!";
+                    showToast("¡Carpeta de dirección descargada con éxito!");
+                    setTimeout(() => {
+                        closePressKitModal();
+                        bar.style.width = '0%';
+                        percent.innerText = '0%';
+                        btn.disabled = false;
+                    }, 1200);
+                }
+            }, 250);
+        }
+
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            updateLightboxContent();
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+            document.getElementById('lightbox-modal').classList.add('flex');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.add('hidden');
+            document.getElementById('lightbox-modal').classList.remove('flex');
+        }
+
+        function updateLightboxContent() {
+            const item = galleryStills[currentLightboxIndex];
+            document.getElementById('lightbox-image').src = item.url;
+            document.getElementById('lightbox-caption').innerText = item.title;
+        }
+
+        function prevLightboxImage() {
+            currentLightboxIndex = (currentLightboxIndex - 1 + galleryStills.length) % galleryStills.length;
+            updateLightboxContent();
+        }
+
+        function nextLightboxImage() {
+            currentLightboxIndex = (currentLightboxIndex + 1) % galleryStills.length;
+            updateLightboxContent();
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            showToast("¡Mensaje enviado con éxito! Te responderemos pronto.");
+            event.target.reset();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = msg;
+            toast.classList.remove('hidden', 'translate-y-4');
+            toast.classList.add('flex', 'translate-y-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-4');
+                setTimeout(() => toast.classList.add('hidden'), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
